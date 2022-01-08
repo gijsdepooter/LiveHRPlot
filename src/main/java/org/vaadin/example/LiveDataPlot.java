@@ -19,9 +19,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Route("")
-public class MainView extends VerticalLayout {
+public class LiveDataPlot extends AbstractChartExample {
 
-    public MainView() {
+    @Override
+    public void initDemo() {
         try {
             HR_data HR = new HR_data();
             List<Integer> hr = HR.GetHR();
@@ -49,22 +50,21 @@ public class MainView extends VerticalLayout {
             series.setPlotOptions(new PlotOptionsSpline());
             series.setName("HR over time");
 
-            SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss.SS");
-
-            for(int i=0; i< hr.size();i++) {
-                //String t = outputFormat.format(ts.get(i));
-                //System.out.println(t);
+            for (int i = 0; i < 10; i++) {
                 series.add(new DataSeriesItem(ts.get(i), hr.get(i)));
-
-
             }
             conf.setSeries(series);
 
+            runWhileAttached(chart, () -> {
+                try {
+                final Time x = HR.LatestTime();
+                final int y = HR.LatestHR();
+                series.add(new DataSeriesItem(x, y), true, true);
+                } catch (Exception e) {e.printStackTrace();}
+            }, 3000, 3000);
 
             add(chart);
 
-
-
-        }catch (Exception e){}
+        } catch (Exception e) {}
     }
 }

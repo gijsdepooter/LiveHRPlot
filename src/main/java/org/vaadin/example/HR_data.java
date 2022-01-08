@@ -34,4 +34,22 @@ public class HR_data {
         }
         return timerec;
     }
+
+    public Integer LatestHR() throws Exception{
+        ResultSet rs = getData("SELECT * FROM hrlive WHERE id=(SELECT max(id) FROM hrlive);");
+        int HR = 0;
+        while(rs.next()) {
+            HR = rs.getInt("heartrate");
+        }
+        return HR;
+    }
+
+    public Time LatestTime() throws Exception{
+        ResultSet rs = getData("SELECT * FROM hrlive WHERE id=(SELECT max(id) FROM hrlive);");
+        Time ts = null;
+        while (rs.next()) {
+            ts = rs.getTime("timerec");
+        }
+        return ts;
+    }
 }
