@@ -21,7 +21,7 @@
     <repositories>
         <!-- The order of definitions matters. Explicitly defining central here to make sure it has the highest priority. -->
 
-        <!-- Main Maven repository -->
+        <!-- org.vaadin.example.Main Maven repository -->
         <repository>
             <id>central</id>
             <url>https://repo.maven.apache.org/maven2</url>
@@ -40,7 +40,7 @@
     </repositories>
 
     <pluginRepositories>
-        <!-- Main Maven repository -->
+        <!-- org.vaadin.example.Main Maven repository -->
         <pluginRepository>
             <id>central</id>
             <url>https://repo.maven.apache.org/maven2</url>
@@ -149,6 +149,10 @@
             <artifactId>webdrivermanager</artifactId>
             <version>5.0.3</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
     </dependencies>
 

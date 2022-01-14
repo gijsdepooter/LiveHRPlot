@@ -12,13 +12,14 @@ import com.vaadin.flow.server.Command;
 
 import java.awt.*;
 
-public abstract class AbstractChartExample extends Div {
+public abstract class AbstractChart extends Div {
 
-    public AbstractChartExample() {
-        initDemo();
+    public AbstractChart() {
+        initDemo("HR");
+        initDemo("ECG");
     }
 
-    public abstract void initDemo();
+    public abstract void initDemo(String plt);
 
     protected void showNotification(String message) {
         UI.getCurrent().getPage()
