@@ -12,9 +12,11 @@ import com.vaadin.flow.server.Command;
 
 import java.awt.*;
 
+/* Reference 1 - Taken from https://demo.vaadin.com/charts/SplineUpdatingEachSecond */
 public abstract class AbstractChart extends Div {
 
     public AbstractChart() {
+        /*This function allows for the selection of the different plots to be posted on the UI*/
         initDemo("HR");
         initDemo("ECG");
     }
@@ -55,3 +57,4 @@ public abstract class AbstractChart extends Div {
         });
     }
 }
+/* End of Reference 1 */

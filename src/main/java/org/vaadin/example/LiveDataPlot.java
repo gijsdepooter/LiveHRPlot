@@ -1,11 +1,13 @@
 package org.vaadin.example;
 
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -18,11 +20,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/* This Class is responsible for making the data plots
+and updating them at given time intervals*/
+
 @Route("")
 public class LiveDataPlot extends AbstractChart {
 
     @Override
     public void initDemo(String plt) {
+
 
         Chart chart = new Chart(ChartType.SPLINE);
         Configuration conf = chart.getConfiguration();
@@ -61,12 +67,13 @@ public class LiveDataPlot extends AbstractChart {
             }
             conf.setSeries(series);
 
-            runWhileAttached(chart, () -> {
+            runWhileAttached(chart, () -> { //plots the latest entries to the database without having to refresh the webapp
                 try {
                     final Patient p1 = GET.makeGETrequest("HR");
                     series.add(new DataSeriesItem(p1.getlastTimeRec(), p1.getlastHR()), true, true);
                 } catch (Exception e) {e.printStackTrace();}
             }, 3000, 3000);
+
 
             add(chart);
 
@@ -82,7 +89,7 @@ public class LiveDataPlot extends AbstractChart {
 
                 series.setName("ECG over time");
                 p = GET.makeGETrequest("ECG");
-                for (int i = 0; i < 500; i++) {
+                for (int i = 0; i < 300; i++) {
                     series.add(new DataSeriesItem(p.getTimeRec().get(i), p.getECG().get(i)));
                 }
                 conf.setSeries(series);
@@ -94,9 +101,10 @@ public class LiveDataPlot extends AbstractChart {
                         series.add(new DataSeriesItem(p1.getlastTimeRec(), p1.getlastECG()), true, true);
 
                     } catch (Exception e) {e.printStackTrace();}
-                }, 30, 30);
+                }, 300, 300);
 
                 add(chart);
+
 
             } catch (Exception e) {System.out.println(e);}
         }
